@@ -11,6 +11,7 @@ import {
   FaCog,
   FaBars,
   FaTimes,
+  FaPlusCircle,
 } from "react-icons/fa";
 import { SignOut } from "./signout-button";
 
@@ -82,6 +83,14 @@ export function SideMenu() {
                   <FaHome />
                 </span>
                 <span>Dashboard</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/projects/create" className="is-flex is-align-items-center">
+                <span className="icon mr-2">
+                  <FaPlusCircle />
+                </span>
+                <span>New Project</span>
               </Link>
             </li>
             <li>
