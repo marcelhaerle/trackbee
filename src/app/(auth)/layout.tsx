@@ -11,7 +11,7 @@ export default function RootLayout({
     <>
       <SessionProvider>
         <SideMenu />
-        <div className="main-content">
+        <div className="main-content content">
           <div className="p-5">{children}</div>
         </div>
       </SessionProvider>
