@@ -1,0 +1,25 @@
+body {
+    overflow-x: hidden;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Main content should be flexible */
+.main-content {
+    flex: 1;
+    transition: margin-left 0.3s ease-in-out;
+    width: 100%;
+}
+
+/* When sidebar is open, push content to the right */
+body.sidebar-open .main-content {
+    margin-left: 250px;
+}
+
+@media (max-width: 768px) {
+
+    /* On smaller screens, overlay content instead of pushing it */
+    body.sidebar-open .main-content {
+        margin-left: 0;
+    }
+}
