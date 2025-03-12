@@ -1,4 +1,4 @@
-import { ProjectGrid } from "@/components/project-grid";
+import Dashboard from "@/components/dashboard";
 import { getCurrentUser } from "@/lib/session";
 
 export default async function DashboardPage() {
@@ -8,7 +8,7 @@ export default async function DashboardPage() {
     <section className="section">
       <h1 className="title">Dashboard</h1>
       <p>Welcome, {user.name}!</p>
-      <ProjectGrid />
+      <Dashboard />
     </section>
   );
 }

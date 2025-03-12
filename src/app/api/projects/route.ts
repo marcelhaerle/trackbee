@@ -4,6 +4,28 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { getCurrentUser } from "@/lib/session";
 
+export async function GET() {
+  const session = await auth();
+
+  if (!session) {
+    return new NextResponse(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
+  const user = await getCurrentUser();
+  const projects = await prisma.project.findMany({
+    where: { userId: user.id },
+  });
+
+  return new NextResponse(JSON.stringify(projects), {
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
 export async function POST(request: Request) {
   const session = await auth();
 

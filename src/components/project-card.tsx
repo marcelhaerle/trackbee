@@ -1,6 +1,7 @@
 "use client";
 
 import { Project } from "@prisma/client";
+import { FaPlay } from "react-icons/fa";
 
 // Function to determine if text should be black or white based on background color
 function getContrastColor(hexColor: string | null): string {
@@ -23,32 +24,44 @@ function getContrastColor(hexColor: string | null): string {
   return luminance > 0.5 ? "#000000" : "#ffffff";
 }
 
-export default function ProjectCard({ project }: { project: Project }) {
+interface ProjectCardProps {
+  project: Project;
+  onStartTracking: (projectId: string) => void;
+}
+
+export default function ProjectCard({
+  project,
+  onStartTracking,
+}: ProjectCardProps) {
+  const textColor = getContrastColor(project.color);
+
   return (
     <>
       <div className="card">
         <div className="card-content">
-          <h2
-            className="title is-5 mb-2"
-            style={{ color: getContrastColor(project.color) }}
-          >
+          <h2 className="title is-5 mb-2" style={{ color: textColor }}>
             {project.name}
           </h2>
+
+          <button
+            className="play-button"
+            onClick={() => onStartTracking(project.id)}
+            aria-label="Start timer"
+          >
+            <FaPlay size={24} />
+          </button>
         </div>
       </div>
+
       <style jsx>{`
         .card-content {
           background-color: ${project.color || "#4A6FFF"};
           transition: all 0.3s ease;
-        }
-
-        .card {
-          transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+          position: relative;
+          overflow: hidden;
+          min-height: 100px;
+          display: flex;
+          flex-direction: column;
         }
       `}</style>
     </>
