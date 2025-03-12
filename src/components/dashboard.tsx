@@ -85,13 +85,17 @@ export default function Dashboard() {
             </div>
           </article>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="columns is-desktop is-multiline">
             {projects.map((project) => (
-              <ProjectCard
+              <div
+                className="column is-half-desktop is-half-widescreen"
                 key={project.id}
-                project={project}
-                onStartTracking={handleStartTracking}
-              />
+              >
+                <ProjectCard
+                  project={project}
+                  onStartTracking={handleStartTracking}
+                />
+              </div>
             ))}
           </div>
         )}
