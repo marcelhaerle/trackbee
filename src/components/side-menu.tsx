@@ -44,7 +44,7 @@ export function SideMenu() {
   return (
     <>
       <div
-        className={`sidebar ${isMenuOpen ? "is-open" : ""}`}
+        className={`sidebar ${isMenuOpen ? "is-open" : ""} has-background-dark`}
         style={{
           position: "fixed",
           left: 0,
@@ -75,10 +75,10 @@ export function SideMenu() {
         </div>
 
         {/* Navigation Menu - Takes up most of the space */}
-        <div className="menu" style={{ flex: "1 1 auto" }}>
-          <ul className="menu-list">
+        <div className="menu has-background-inherit" style={{ flex: "1 1 auto" }}>
+          <ul className="menu-list ">
             <li>
-              <Link href="/dashboard" className="is-flex is-align-items-center">
+              <Link href="/dashboard" className="has-background-dark">
                 <span className="icon mr-2">
                   <FaHome />
                 </span>
@@ -86,7 +86,7 @@ export function SideMenu() {
               </Link>
             </li>
             <li>
-              <Link href="/projects/create" className="is-flex is-align-items-center">
+              <Link href="/projects/create" className="has-background-dark">
                 <span className="icon mr-2">
                   <FaPlusCircle />
                 </span>
@@ -94,7 +94,7 @@ export function SideMenu() {
               </Link>
             </li>
             <li>
-              <Link href="/dashboard" className="is-flex is-align-items-center">
+              <Link href="/dashboard" className="has-background-dark">
                 <span className="icon mr-2">
                   <FaChartBar />
                 </span>
@@ -102,7 +102,7 @@ export function SideMenu() {
               </Link>
             </li>
             <li>
-              <Link href="/dashboard" className="is-flex is-align-items-center">
+              <Link href="/dashboard" className="has-background-dark">
                 <span className="icon mr-2">
                   <FaClock />
                 </span>
@@ -110,7 +110,7 @@ export function SideMenu() {
               </Link>
             </li>
             <li>
-              <Link href="/dashboard" className="is-flex is-align-items-center">
+              <Link href="/dashboard" className="has-background-dark">
                 <span className="icon mr-2">
                   <FaCog />
                 </span>
