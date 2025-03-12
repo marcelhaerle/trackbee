@@ -1,8 +1,50 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, ReactNode } from "react";
 import { FaClock, FaProjectDiagram, FaStop } from "react-icons/fa";
 import { CurrentTracking } from "./dashboard";
+
+function formatHoursElapsed(startTime: Date): ReactNode {
+  const now = new Date();
+  const diffMs = now.getTime() - startTime.getTime();
+
+  const hours = Math.floor(diffMs / (1000 * 60 * 60));
+
+  return (
+    <span>
+      {hours < 10 && <span>&nbsp;</span>}
+      {hours} {hours === 1 ? "hour" : "hours"}
+    </span>
+  );
+}
+
+function formatMinutesElapsed(startTime: Date): ReactNode {
+  const now = new Date();
+  const diffMs = now.getTime() - startTime.getTime();
+
+  const minutes = Math.floor((diffMs / (1000 * 60)) % 60);
+
+  return (
+    <span>
+      {minutes < 10 && <span>&nbsp;</span>}
+      {minutes} {minutes === 1 ? "minute" : "minutes"}
+    </span>
+  );
+}
+
+function formatSecondsElapsed(startTime: Date): ReactNode {
+  const now = new Date();
+  const diffMs = now.getTime() - startTime.getTime();
+
+  const seconds = Math.floor((diffMs / 1000) % 60);
+
+  return (
+    <span>
+      {seconds < 10 && <span>&nbsp;</span>}
+      {seconds} {seconds === 1 ? "second" : "seconds"}
+    </span>
+  );
+}
 
 // Custom time formatting function
 function formatTimeElapsed(startTime: Date): string {
@@ -42,6 +84,9 @@ export function CurrentTrackingInfo({
   onStopTracking,
 }: CurrentTrackingInfoProps) {
   const [elapsedTime, setElapsedTime] = useState<string>("");
+  const [elapsedHours, setElapsedHours] = useState<ReactNode>("");
+  const [elapsedMinutes, setElapsedMinutes] = useState<ReactNode>("");
+  const [elapsedSeconds, setElapsedSeconds] = useState<ReactNode>("");
 
   // Update the elapsed time display using our custom formatter
   const updateElapsedTime = useCallback(() => {
@@ -50,6 +95,10 @@ export function CurrentTrackingInfo({
     const startTime = new Date(currentTracking.startTime);
     const formattedTime = formatTimeElapsed(startTime);
     setElapsedTime(formattedTime);
+
+    setElapsedHours(formatHoursElapsed(startTime));
+    setElapsedMinutes(formatMinutesElapsed(startTime));
+    setElapsedSeconds(formatSecondsElapsed(startTime));
   }, [currentTracking]);
 
   // Setup interval for updating elapsed time
@@ -89,10 +138,18 @@ export function CurrentTrackingInfo({
               <span className="icon mr-2 has-text-primary">
                 <FaClock />
               </span>
-              <span className="timer is-size-4 has-text-weight-bold">
+              <span className="timer is-size-4 has-text-weight-bold is-hidden-touch">
                 {elapsedTime}
               </span>
-              <span className="has-text-grey ml-2 is-size-7">
+              <span className="timer is-size-4 has-text-weight-bold is-hidden-desktop">
+                {elapsedHours}
+                <br />
+                {elapsedMinutes}
+                <br />
+                {elapsedSeconds}
+                <br />
+              </span>
+              <span className="has-text-grey ml-2 is-size-7 is-hidden-touch">
                 since {new Date(currentTracking.startTime).toLocaleTimeString()}
               </span>
             </div>
@@ -115,7 +172,8 @@ export function CurrentTrackingInfo({
         .current-tracking-info {
           position: relative;
           width: 100%;
-          max-width: 600px;
+          max-width: 700px;
+          margin: 0 auto;
         }
 
         .tracking-time .timer {
