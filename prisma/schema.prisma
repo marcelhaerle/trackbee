@@ -21,14 +21,14 @@ model Project {
 }
 
 model TimeEntry {
-  id          String    @id @default(cuid())
+  id          String   @id @default(cuid())
   description String?
   startTime   DateTime
-  endTime     DateTime?
-  projectId   String?
-  project     Project?  @relation(fields: [projectId], references: [id])
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  endTime     DateTime
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model CurrentTrack {
