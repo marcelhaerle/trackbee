@@ -149,17 +149,33 @@ export async function DELETE() {
 
   if (currentTracking) {
     // Stop tracking the current (other) project.
-    await prisma.timeEntry.create({
+    // Round the start time to the nearest minute.
+    const startTime = currentTracking.startTime;
+    startTime.setSeconds(0, 0);
+
+    //Round the end time to the next minute.
+    const endTime = new Date();
+    endTime.setSeconds(0, 0);
+    endTime.setMinutes(endTime.getMinutes() + 1);
+
+    const createdEntry = await prisma.timeEntry.create({
       data: {
         projectId: currentTracking.projectId,
-        startTime: currentTracking.startTime,
-        endTime: new Date(),
+        startTime,
+        endTime,
       },
     });
 
     await prisma.currentTrack.delete({
       where: {
         userId: user.id,
+      },
+    });
+
+    return new NextResponse(JSON.stringify(createdEntry), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
       },
     });
   }
