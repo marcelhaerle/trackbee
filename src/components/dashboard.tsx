@@ -5,6 +5,7 @@ import { CurrentTrackingInfo } from "./current-tracking-info";
 import { Project } from "@prisma/client";
 import Link from "next/link";
 import ProjectCard from "./project-card";
+import { useRouter } from "next/navigation";
 
 export interface CurrentTracking {
   id: string;
@@ -13,6 +14,8 @@ export interface CurrentTracking {
 }
 
 export default function Dashboard() {
+  const router = useRouter();
+
   const [projects, setProjects] = useState<Project[]>([]);
   const [currentTracking, setCurrentTracking] =
     useState<CurrentTracking | null>(null);
@@ -40,9 +43,16 @@ export default function Dashboard() {
   const handleStopTracking = async () => {
     fetch(`/api/tracking`, {
       method: "DELETE",
-    });
-
-    setCurrentTracking(null);
+    })
+      .then((response) => response.json())
+      .then((createdTimeEntry) => {
+        console.log(createdTimeEntry);
+        if (createdTimeEntry) {
+          router.push(`/time/${createdTimeEntry.id}/edit`);
+        } else {
+          setCurrentTracking(null);
+        }
+      });
   };
 
   useEffect(() => {
