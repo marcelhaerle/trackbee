@@ -12,7 +12,7 @@ export default function RootLayout({
       <SessionProvider>
         <SideMenu />
         <div className="main-content content">
-          <div className="p-5">{children}</div>
+          <div className="p-5 ml-6">{children}</div>
         </div>
       </SessionProvider>
     </>

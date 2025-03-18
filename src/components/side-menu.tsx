@@ -75,7 +75,10 @@ export function SideMenu() {
         </div>
 
         {/* Navigation Menu - Takes up most of the space */}
-        <div className="menu has-background-inherit" style={{ flex: "1 1 auto" }}>
+        <div
+          className="menu has-background-inherit"
+          style={{ flex: "1 1 auto" }}
+        >
           <ul className="menu-list ">
             <li>
               <Link href="/dashboard" className="has-background-dark">
@@ -102,7 +105,7 @@ export function SideMenu() {
               </Link>
             </li>
             <li>
-              <Link href="/dashboard" className="has-background-dark">
+              <Link href="/time" className="has-background-dark">
                 <span className="icon mr-2">
                   <FaClock />
                 </span>
